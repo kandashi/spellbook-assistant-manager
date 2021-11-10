@@ -8,7 +8,7 @@
 ## Class Item
 
 SAM is designed to make managing separate spellcasting classes easy. Each class item gains a new Spellbook Tab, which holds available spells for that class.
-![class spellbook]()
+![class spellbook](https://github.com/kandashi/spellbook-assistant-manager/blob/master/images/class-spellbook.png?raw=true)
 
 These fields can be edited like any text field in foundry, simply drag-drop a spell into the field under the appropriate level.
 
@@ -20,13 +20,13 @@ When a class is added to an actor, or leveled up, a prompt will appear in the sa
 
 On the actor sheet, in the spellbook tab, an additional field has been added to denote which class "owns" each spell
 
-![actor spellbook]()
+![actor spellbook](https://github.com/kandashi/spellbook-assistant-manager/blob/master/images/actor-spellbook.png?raw=true)
 
 ## Item Sheet
 
 The source class data can be changed in the item itself, under the Source Class field, and will update the casting modifier to match.
 
-![item source class]()
+![item source class](https://github.com/kandashi/spellbook-assistant-manager/blob/master/images/item-source.png?raw=true)
 
 ## Level Up
 

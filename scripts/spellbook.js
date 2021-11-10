@@ -74,6 +74,7 @@ export class spellManager {
             case "artificer": maxLevel = Math.ceil(classLevel / 2); break;
             case "pact": maxLevel = classLevel; break;
         }
+        if(maxLevel == 0) {return}
         let html = classItem.getFlag("spellbook-assistant-manager", `slot-${CONFIG.DND5E.SPELL_SLOT_TABLE[maxLevel - 1].length}`)
         let div = document.createElement("div")
         div.innerHTML = html
@@ -96,7 +97,7 @@ export class spellManager {
     static async addEmbeddedItems(items, prompt = true, name, actor) {
         let classAbl = actor.classes[`${name.slugify({ strict: true })}`].data.data.spellcasting.ability
         let itemsToAdd = items;
-        if (!items.length) return [];
+        if (!items?.length) return [];
 
         // Obtain the array of item creation data
         let toCreate = [];
@@ -112,7 +113,7 @@ export class spellManager {
         }
 
         toCreate.forEach(i => {
-            i.flags["spellbook-assistant-manager"] = { class: name }
+            i.flags["spellbook-assistant-manager"] = { class: name.slugify({ strict: true }) }
             i.data.ability = classAbl
             i.data.save.scaling = classAbl
         })

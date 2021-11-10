@@ -67,7 +67,7 @@ Hooks.on("preUpdateItem", (item, update) => {
     if (update?.flags) {
         let className = update?.flags["spellbook-assistant-manager"]?.class
         let classItem = item.actor.classes[className.slugify({ strict: true })]
-        if("classItem") return
+        if(!classItem) return
         let classAbl = classItem.data.data.spellcasting.ability
         let newUp = {
             data: {

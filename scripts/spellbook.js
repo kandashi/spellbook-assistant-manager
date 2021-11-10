@@ -74,10 +74,12 @@ export class spellManager {
             case "artificer": maxLevel = Math.ceil(classLevel / 2); break;
             case "pact": maxLevel = classLevel; break;
         }
-        if(maxLevel == 0) {return}
-        let html = classItem.getFlag("spellbook-assistant-manager", `slot-${CONFIG.DND5E.SPELL_SLOT_TABLE[maxLevel - 1].length}`)
+        if (maxLevel == 0) { return }
         let div = document.createElement("div")
-        div.innerHTML = html
+        for (let i = maxLevel; i >= 0; i--) {
+            let html = classItem.getFlag("spellbook-assistant-manager", `slot-${CONFIG.DND5E.SPELL_SLOT_TABLE[i - 1]?.length || 0}`)
+            div.innerHTML += html
+        }
         let spells = await this.getItems(div)
         return spells.filter(f => !existing.has(f.name)) || [];
     }

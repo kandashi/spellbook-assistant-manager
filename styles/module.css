@@ -1,0 +1,85 @@
+#spellbook {
+    height: 6em;
+}
+
+#spellbook .tox-edit-area{
+    border: 1px solid black;
+    border-right: none;
+    border-left: none;
+}
+
+#spellbook .tox.tox-tinymce{
+    height: 9em !important;
+}
+
+#spellbook.expand{
+    height: 12em
+}
+
+button.levelup {
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    display: inline-flex;
+}
+
+.classes .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: flex-start;
+  }
+  
+  .classes .radio-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    flex: 1 0 25%;
+    line-height: normal;
+  }
+  
+  .classes .radio-label input {
+    display: none;
+  }
+  
+  .classes img {
+    border: 0px;
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+    cursor: pointer;
+  }
+      
+  /* CHECKED STYLES */
+  .classes [type=radio]:checked + img {
+    outline: 2px solid #f00;
+  }
+
+  .dnd5e.sheet .items-list .item .class-image {
+    flex: 0 0 30px;
+    height: 30px;
+    display: flex;
+    background-size: 30px;
+    border: none;
+  }
+
+  .dnd5e.sheet.actor .source-class {
+    flex: 0 0 80px;
+    display: flex;
+    font-size: 12px;
+    color: #7a7971;
+    text-align: center;
+    border-right: 1px solid #c9c7b8;
+    justify-content: center;
+  }
+
+  .spellbook .entity-link {
+      display: flex;
+  }
+
+  .spellbook .entity-link img {
+      height: 1em;
+      width: 1em;
+  }

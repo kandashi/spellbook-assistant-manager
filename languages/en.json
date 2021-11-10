@@ -1,3 +1,5 @@
 {
-    "MODULE.hello": "hello"
+    "sam.levelPrompt" : "Choose a Class to level up",
+    "sam.levelConfirm" : "Level Up",
+    "sam.classSelect" : "Source Class"
 }

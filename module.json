@@ -39,7 +39,7 @@
     {
       "name": "classes",
       "label": "SAM Classes",
-      "path": "packs/classes",
+      "path": "packs/classes.db",
       "entity": "Item",
       "system": "dnd5e",
       "module": "spellbook-assistant-manager",

@@ -5,8 +5,9 @@
   "version": "This is auto replaced",
   "library": "false",
   "manifestPlusVersion": "1.0.0",
-  "minimumCoreVersion": "0.8.8",
-  "compatibleCoreVersion": "0.8.8",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "9",
+  "minimumSystemVersion" : "1.6.0",
   "systems" : ["dnd5e"],
   "authors": [
     {
@@ -21,7 +22,6 @@
     }
   ],
   "esmodules": [
-    "/scripts/spellbook.js",
     "/scripts/lib/lib.js",
     "/scripts/levelup.js"
   ],
@@ -33,17 +33,6 @@
       "lang": "en",
       "name": "English",
       "path": "languages/en.json"
-    }
-  ],
-  "packs": [
-    {
-      "name": "classes",
-      "label": "SAM Classes",
-      "path": "packs/classes.db",
-      "entity": "Item",
-      "system": "dnd5e",
-      "module": "spellbook-assistant-manager",
-      "private": false
     }
   ],
   "url": "This is auto replaced",

@@ -1,14 +1,5 @@
-import { spellManager } from "./spellbook.js";
 
 Hooks.on("renderActorSheet", (actor, html) => {
-    let levels = html.find(".charlevel .levels")
-    let button = `<button class="levelup"><i class="fas fa-caret-square-up"></i></button>`
-    levels.append(button)
-    let a = html.find(".levelup")[0]
-    a.addEventListener('click', async () => {
-        spellManager.levelUp(actor.object)
-    })
-
     let headers = html.find(".items-header.spellbook-header .spell-school")
     for (let h of headers) {
         const $div = $(`<div class="source-class">Source Class</div>`)
@@ -19,8 +10,9 @@ Hooks.on("renderActorSheet", (actor, html) => {
     for (let s of spells) {
         let id = s.parentElement.outerHTML.match(/data-item-id="(.*?)"/)
         let item = actor.object.items.get(id[1])
-        let itemClass = item.data.flags["spellbook-assistant-manager"]?.class
-        let classItem = actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
+        let advancementID = item.getFlag("dnd5e", "advancementOrigin")
+        let classItem = actor.object.items.get(advancementID.split(".")[0])
+        //let classItem = actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
         const $div = $(`
         <div class="source-class">
             <div class="class-image" aria-label="${classItem?.name || ""}" style="background-image: url(${classItem?.img || ""});"></div>
@@ -33,7 +25,7 @@ Hooks.on("renderActorSheet", (actor, html) => {
 Hooks.on("renderItemSheet", (sheet, html) => {
     if (sheet.object.type === "spell") {
         let school = html.find(`select[name="data.school"]`)[0]
-        let itemClass = sheet.object.data.flags["spellbook-assistant-manager"]?.class || ""
+        let itemClass = sheet.object.parent.items.get(sheet.object.data.flags.dnd5e?.advancementOrigin?.split(".")[0]).name.toLowerCase() || sheet.object.data.flags["spellbook-assistant-manager"]?.class || ""
         let classes = sheet.actor.classes
         let options = ""
         for (const val in classes) {
@@ -67,7 +59,7 @@ Hooks.on("preUpdateItem", (item, update) => {
     if (update?.flags) {
         let className = update?.flags["spellbook-assistant-manager"]?.class
         let classItem = item.actor.classes[className.slugify({ strict: true })]
-        if(!classItem) return
+        if (!classItem) return
         let classAbl = classItem.data.data.spellcasting.ability
         let newUp = {
             data: {
@@ -78,5 +70,23 @@ Hooks.on("preUpdateItem", (item, update) => {
             }
         }
         return update = mergeObject(update, newUp)
+    }
+})
+
+Hooks.on("preCreateItem", (item, data, options) => {
+    if (item.data.flags.dnd5e?.advancementOrigin) {
+        let classItem = item.actor.items.get(item.data.flags.dnd5e.advancementOrigin.split(".")[0])
+        if (!classItem) return data;
+        let classAbl = classItem.data.data.spellcasting.ability
+        let newUp = {
+            data: {
+                ability: classAbl,
+                save: {
+                    scaling: classAbl
+                }
+            }
+        }
+        return data = mergeObject(data, newUp)
+
     }
 })

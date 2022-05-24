@@ -144,40 +144,6 @@ export class spellManager {
         });
     }
 
-    static levelUp(actor) {
-        let classes = actor.classes
-        let options = ""
-        for (const val in classes) {
-            options += `<label class="radio-label">
-            <input type="radio" name="classes" value="${classes[val].id}">
-            <img src="${classes[val].img}" style="border:0px; width: 50px; height:50px;">
-            ${val}
-          </label>`
-        }
-        let content = `
-        <form class="flexcol classes">
-        <div class="form-group" id="classes">
-        ${options}
-    </div>
-            </form>
-        `
-        new Dialog({
-            title: game.i18n.localize("sam.levelPrompt"),
-            content: content,
-            buttons: {
-                yes: {
-                    icon: `<i class="fas fa-caret-square-up"></i>`,
-                    label: game.i18n.localize("sam.levelConfirm"),
-                    callback: async (html) => {
-                        let id = $("input[type='radio'][name='classes']:checked").val();
-                        let classItem = actor.items.get(id)
-                        await classItem.update({ "data.levels": classItem.data.data.levels + 1 })
-                    }
-                }
-            }
-        }).render(true)
-    }
-
 }
 
 class spellOverrides {

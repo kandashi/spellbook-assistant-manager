@@ -11,7 +11,9 @@ Hooks.on("renderActorSheet", (actor, html) => {
         let id = s.parentElement.outerHTML.match(/data-item-id="(.*?)"/)
         let item = actor.object.items.get(id[1])
         let advancementID = item.getFlag("dnd5e", "advancementOrigin")
-        let classItem = actor.object.items.get(advancementID.split(".")[0])
+        let itemClass = item.data.flags["spellbook-assistant-manager"]?.class
+        let classItem = actor.object.items.get(advancementID?.split(".")[0]) ?? actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
+
         //let classItem = actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
         const $div = $(`
         <div class="source-class">
@@ -25,7 +27,7 @@ Hooks.on("renderActorSheet", (actor, html) => {
 Hooks.on("renderItemSheet", (sheet, html) => {
     if (sheet.object.type === "spell") {
         let school = html.find(`select[name="data.school"]`)[0]
-        let itemClass = sheet.object.parent.items.get(sheet.object.data.flags.dnd5e?.advancementOrigin?.split(".")[0]).name.toLowerCase() || sheet.object.data.flags["spellbook-assistant-manager"]?.class || ""
+        let itemClass = sheet.object.parent.items.get(sheet.object.data.flags.dnd5e?.advancementOrigin?.split(".")[0])?.name.toLowerCase() || sheet.object.data.flags["spellbook-assistant-manager"]?.class || ""
         let classes = sheet.actor.classes
         let options = ""
         for (const val in classes) {

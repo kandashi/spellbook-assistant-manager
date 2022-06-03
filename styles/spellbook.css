@@ -65,6 +65,23 @@ button.levelup {
     border: none;
   }
 
+  .tidy5e.sheet.actor .list-layout .items-list .item .spell-class {
+    width: 50px;
+    justify-content: center;
+  }
+
+  .tidy5e.sheet.actor .list-layout .items-list .item .class-image {
+    flex: 0 0 26px;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    background-size: 26px;
+    border: none;
+  }
+
+  .tidy5e.sheet.actor .items-list .items-header-labels .items-header-sourceClass {
+    width: 50px;
+  }
   .dnd5e.sheet.actor .source-class {
     flex: 0 0 80px;
     display: flex;

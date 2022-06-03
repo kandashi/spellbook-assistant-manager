@@ -1,30 +1,64 @@
 
 Hooks.on("renderActorSheet", (actor, html) => {
-    let headers = html.find(".items-header.spellbook-header .spell-school")
-    for (let h of headers) {
-        const $div = $(`<div class="source-class">Source Class</div>`)
-        h.after($div[0])
-    }
 
-    let spells = html.find(".spellbook .item .spell-school")
-    for (let s of spells) {
-        let id = s.parentElement.outerHTML.match(/data-item-id="(.*?)"/)
-        let item = actor.object.items.get(id[1])
-        let advancementID = item.getFlag("dnd5e", "advancementOrigin")
-        let itemClass = item.data.flags["spellbook-assistant-manager"]?.class
-        let classItem = actor.object.items.get(advancementID?.split(".")[0]) ?? actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
 
-        //let classItem = actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
-        const $div = $(`
+    switch (actor.object.data.flags.core.sheetClass) {
+        case "dnd5e.Tidy5eSheet": {
+            let headers = html.find(".items-header-comps")
+            for (let h of headers) {
+                const $div = $(`<div class="items-header-sourceClass" title="Spell Source">Source</div>`)
+                h.before($div[0])
+            }
+            let spells = html.find(".inventory-list.spellbook-list.items-list .item")
+            debugger
+            for (let s of spells) {
+                let id = s.outerHTML.match(/data-item-id="(.*?)"/)
+                let item = actor.object.items.get(id[1])
+                let advancementID = item.getFlag("dnd5e", "advancementOrigin")
+                let itemClass = item.data.flags["spellbook-assistant-manager"]?.class
+                let classItem = actor.object.items.get(advancementID?.split(".")[0]) ?? actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
+                const $div = $(`
+                <div class="item-detail spell-class">
+					          <div class="class-image" aria-label="${classItem?.name || ''}" style="background-image: url(${classItem?.img || ''})"></div>
+					        </div>
+                    `)
+                let itemHTML = html.find(`[data-item-id="${id[1]}"]`)
+                let name = itemHTML.find(".item-name")
+                    name.after($div[0])
+            }
+        }
+            break;
+        default: {
+            let headers = html.find(".items-header.spellbook-header .spell-school")
+            for (let h of headers) {
+                const $div = $(`<div class="source-class">Source Class</div>`)
+                h.after($div[0])
+            }
+            let spells = html.find(".spellbook .item .spell-school")
+            for (let s of spells) {
+                let id = s.parentElement.outerHTML.match(/data-item-id="(.*?)"/)
+                let item = actor.object.items.get(id[1])
+                let advancementID = item.getFlag("dnd5e", "advancementOrigin")
+                let itemClass = item.data.flags["spellbook-assistant-manager"]?.class
+                let classItem = actor.object.items.get(advancementID?.split(".")[0]) ?? actor.object.classes[`${itemClass?.slugify({ strict: true })}`]
+                const $div = $(`
         <div class="source-class">
             <div class="class-image" aria-label="${classItem?.name || ""}" style="background-image: url(${classItem?.img || ""});"></div>
         </div>
             `)
-        s.after($div[0])
+                s.after($div[0])
+            }
+        }
     }
+
 })
 
 Hooks.on("renderItemSheet", (sheet, html) => {
+    switch (sheet.object.data.flags.core.sheetClass) {
+        case "dnd5e.Tidy5eSheet": {
+
+        }
+    }
     if (sheet.object.type === "spell") {
         let school = html.find(`select[name="data.school"]`)[0]
         let itemClass = sheet.object.parent.items.get(sheet.object.data.flags.dnd5e?.advancementOrigin?.split(".")[0])?.name.toLowerCase() || sheet.object.data.flags["spellbook-assistant-manager"]?.class || ""
@@ -44,16 +78,6 @@ Hooks.on("renderItemSheet", (sheet, html) => {
     `)
         school.parentElement.after($div[0])
     }
-    /** 
-    else if (sheet.object.type === "class") {
-        let linkIcons = html.find(".spellbook .entity-link .fas")
-        for(let i of linkIcons){
-            let id = i.outerHTML.match(/data-entity-id="(.*?)"/)
-            let item = spellManager.getItems(document.createElement("div").innerHTML = i.parentElementouterHTML)[0]
-            const div = `<img src="${item.data.img}>`
-            i.outerHTML = div
-        }
-    }*/
 })
 
 
@@ -89,6 +113,5 @@ Hooks.on("preCreateItem", (item, data, options) => {
             }
         }
         return data = mergeObject(data, newUp)
-
     }
 })

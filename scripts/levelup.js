@@ -54,7 +54,7 @@ Hooks.on("renderActorSheet", (actor, html) => {
 })
 
 Hooks.on("renderItemSheet", (sheet, html) => {
-    switch (sheet.object.data.flags.core.sheetClass) {
+    switch (sheet.object.data.flags.core?.sheetClass) {
         case "dnd5e.Tidy5eSheet": {
 
         }
